@@ -1,17 +1,17 @@
 # 前端
-FROM node:14 as frontend
+FROM node:20 AS frontend
 WORKDIR /app/frontend
-COPY tetris-game/package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
-COPY tetris-game .
+COPY frontend .
 RUN npm run build
 
 # 後端
-FROM node:14
+FROM node:20
 WORKDIR /app/backend
-COPY tetris-backend/package*.json ./
+COPY backend/package*.json ./
 RUN npm install
-COPY tetris-backend .
+COPY backend .
 COPY --from=frontend /app/frontend/dist /app/backend/public
 
 EXPOSE 3000
